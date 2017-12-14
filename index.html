@@ -1,63 +1,13 @@
-<html>
-  <head>
-    <title>Time Baron's Card Bible</title>
-    <style>
-      body {margin:0;padding:30px;background:#010101;color:#ddd;-webkit-font-smoothing: antialiased;}
-      .container {display:flex;flex-flow:row wrap;}
-      .filters {flex:0 1 200px;margin:0;padding:0;list-style:none;}
-      .filters li {}
-      .filters li label {display:inline-block;color:#ddd;font:500 12px/20px Roboto, sans-serif;letter-spacing:1px;text-transform:uppercase;}
-      .filters li label input {position:relative;margin:0 10px 0 0;vertical-align:middle;margin:10px 20px 10px 0;}
-      .filters li label input:before {position:absolute;top:-5px;display:block;content:'';width:20px;height:20px;background:#010101;border:1px solid #333;border-radius:2px;color:#ffe345;line-height:20px;text-align:center;}
-      .filters li label input:checked:after {position:absolute;top:-5px;display:block;content:'\2714';width:20px;height:20px;background:#010101;border:1px solid #333;border-radius:2px;color:#ffe345;line-height:20px;text-align:center;}
-      .logo {margin:15px 0;max-width:170px;}
-      .cards {display:flex;flex-flow:row wrap;flex:1 1 275px;}
-      .cards div {flex:0 1 250px;padding:10px;}
-      .cards div img {display:block;max-width:100%;}
-      .cards div.search {box-sizing:border-box;flex:1 1 90%;padding:0;}
-      .cards div.count {flex:0 0 10%;padding:0;text-align:right;}
-      .cards div.count span {display:block;width:calc(100% - 30px);color:#666;border-bottom:1px solid #666;font:300 15px/60px Georgia, serif;}
-      .search input {padding:0;width:100%;background:transparent;border:none;border-bottom:1px solid #666;color:#ddd;font:300 25px/60px Georgia, serif;outline:none;}
-    </style>
-  </head>
+<!doctype html>
 
-  <body>
-    <div id="app">
-      <cards></cards>
-    </div>
+<html lang="en">
+<head>
+  <!-- META -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script type="x-template" id="cards">
-      <div class="container">
-        <ul class="filters">
-          <li><img class="logo" src="/images/logo.png"></li>
-          <li><label><input type="checkbox" v-model="filters.set.core">Core</label></li>
-          <li><label><input type="checkbox" v-model="filters.set.expansion">Expansion</label></li>
-          <br>
-          <li><label><input type="checkbox" v-model="filters.level.i">I</label></li>
-          <li><label><input type="checkbox" v-model="filters.level.ii">II</label></li>
-          <li><label><input type="checkbox" v-model="filters.level.iii">III</label></li>
-          <li><label><input type="checkbox" v-model="filters.level.iv">IV</label></li>
-          <br>
-          <li><label><input type="checkbox" v-model="filters.type.site">Site</label></li>
-          <li><label><input type="checkbox" v-model="filters.type.attachment">Attachment</label></li>
-          <li><label><input type="checkbox" v-model="filters.type.event">Event</label></li>
-          <li><label><input type="checkbox" v-model="filters.type.reaction">Reaction</label></li>
-        </ul>
-
-        <div class="cards">
-          <div class="search">
-            <label><input type="text" v-model="filters.name" placeholder="Search cards..."></label>
-          </div>
-
-          <div class="count">
-            <span>{{ sort.length }} / {{ cards.length }}</span>
-          </div>
-
-          <div v-for="card in sort"><img :src="card.stats.image"></div>
-        </div>
-      </div>
-    </script>
-    <script src="vue.js"></script>
-    <script src="main.js"></script>
-  </body>
+  <title>I am not original.</title>
+</head>
+<body>
+</body>
 </html>

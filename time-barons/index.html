@@ -1,0 +1,100 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <!-- META -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="theme-color" content="#010101">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#010101">
+
+  <title>Time Barons Card Bible</title>
+  <meta name="description" content="Search and filter the full card inventory of Time Barons.">
+
+  <!-- CSS -->
+  <style>
+    body {overflow-y:scroll;margin:0;padding:30px;background:#010101;color:#ddd;-webkit-font-smoothing: antialiased;}
+    .container {}
+    .filters {float:left;margin:0;padding:0 20px 30px 0;list-style:none;}
+    .filters li {}
+    .filters li label {display:block;color:#ddd;font:500 12px/20px Roboto, sans-serif;letter-spacing:1px;text-transform:uppercase;}
+    .filters li label input {position:relative;margin:7.5px 20px 7.5px 0;vertical-align:middle;}
+    .filters li label input[type=checkbox] {visibility:hidden;}
+    .filters li label input[type=checkbox]:before {visibility:visible;position:absolute;top:-5px;display:block;content:'';width:20px;height:20px;background:#010101;border:1px solid #333;border-radius:2px;color:#ffe345;line-height:20px;text-align:center;}
+    .filters li label input[type=checkbox]:checked:before {visibility:visible;position:absolute;top:-5px;display:block;content:'\2714';width:20px;height:20px;background:#010101;border:1px solid #333;border-radius:2px;color:#ffe345;line-height:20px;text-align:center;}
+    .filter-name {color:#666;font:500 10px/20px Roboto, sans-serif;letter-spacing:1px;text-transform:uppercase;}
+    .logo {margin:25px 0;max-width:170px;}
+    .cards {overflow:hidden;}
+    .cards div {float:left;max-width:255px;padding:10px;}
+    .cards div.hide {display:none;}
+    .cards div img {display:block;max-width:100%;}
+    .cards div.search {float:none;padding:10px;max-width:none;}
+    .cards div.count {float:right;padding:0;color:#666;border-bottom:1px solid #333;font:300 15px/60px Georgia, serif;text-align:right;}
+    .search label {display:block;overflow:hidden;}
+    .search input {padding:0;width:100%;background:transparent;border:none;border-bottom:1px solid #333;color:#ddd;font:300 25px/60px Georgia, serif;outline:none;}
+    .cards .logo,
+    .menu {display:none;}
+
+    @media all and (max-width:450px) {
+      body {overflow-y:auto;}
+      .logo {margin:30px 0;max-width:100%;}
+      .cards .logo {display:block;margin:0 0 0 10px;max-width:calc(100% - 20px);}
+      .filters {display:none;float:none;position:absolute;top:0;right:0;bottom:121px;left:0;padding:0 40px 30px;overflow:auto;background:#010101;}
+      .filters.show {display:block;}
+      .cards div.search {position:fixed;right:0;bottom:0;left:0;padding:10px 40px;background:hsla(0, 0%, 0%, .98);}
+      .cards div {padding:0;max-width:none;}
+      .menu {display:block;padding:10px 0;color:#ffe345;font:500 10px/20px Roboto, sans-serif;letter-spacing:1px;text-transform:uppercase;}
+      .menu span {font-size:14px;margin-right:5px;vertical-align:middle;}
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <cards></cards>
+  </div>
+
+  <script type="x-template" id="cards">
+    <div class="container">
+      <ul class="filters" :class="{ show: showFilters }">
+        <li><img class="logo" src="/images/logo.png"></li>
+        <li class="filter-name">SET</li>
+        <li><label><input type="checkbox" v-model="filters.set.core">Core</label></li>
+        <li><label><input type="checkbox" v-model="filters.set.expansion">Expansion</label></li>
+        <br>
+        <li class="filter-name">LEVEL</li>
+        <li><label><input type="checkbox" v-model="filters.level.i">I</label></li>
+        <li><label><input type="checkbox" v-model="filters.level.ii">II</label></li>
+        <li><label><input type="checkbox" v-model="filters.level.iii">III</label></li>
+        <li><label><input type="checkbox" v-model="filters.level.iv">IV</label></li>
+        <br>
+        <li class="filter-name">TYPE</li>
+        <li><label><input type="checkbox" v-model="filters.type.site">Site</label></li>
+        <li><label><input type="checkbox" v-model="filters.type.attachment">Attachment</label></li>
+        <li><label><input type="checkbox" v-model="filters.type.event">Event</label></li>
+        <li><label><input type="checkbox" v-model="filters.type.reaction">Reaction</label></li>
+        <br>
+        <li class="filter-name">COST</li>
+        <li><label><input type="checkbox" v-model="filters.cost.zero">None</label></li>
+        <li><label><input type="checkbox" v-model="filters.cost.one">1</label></li>
+        <li><label><input type="checkbox" v-model="filters.cost.two">2</label></li>
+        <li><label><input type="checkbox" v-model="filters.cost.three">3</label></li>
+      </ul>
+
+      <div class="cards">
+        <img class="logo" src="/images/logo.png">
+        <div class="search">
+          <div class="count">{{ count }} / {{ cards.length }}</div>
+          <label><input type="text" placeholder="Search cards..." id="search" v-model="filters.name"></label>
+          <a class="menu" @click="toggleFilters"><span>&#9776;</span> Menu</a>
+        </div>
+
+        <div v-for="card in sort" :class="card.stats.class" v-show="!showFilters"><img :src="card.stats.image"></div>
+      </div>
+    </div>
+  </script>
+  <script src="vue.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
