@@ -58,7 +58,7 @@
   <script type="x-template" id="cards">
     <div class="container">
       <ul class="filters" :class="{ show: showFilters }">
-        <li><img class="logo" src="images/logo.png"></li>
+        <li><img class="logo" alt="Time Barons" src="images/logo.png"></li>
         <li class="filter-name">SET</li>
         <li><label><input type="checkbox" v-model="filters.set.core">Core</label></li>
         <li><label><input type="checkbox" v-model="filters.set.expansion">Expansion</label></li>
@@ -83,14 +83,14 @@
       </ul>
 
       <div class="cards">
-        <img class="logo" src="images/logo.png">
+        <img class="logo" alt="Time Barons" src="images/logo.png">
         <div class="search">
           <div class="count">{{ count }} / {{ cards.length }}</div>
           <label><input type="text" placeholder="Search cards..." id="search" v-model="filters.name"></label>
           <a class="menu" @click="toggleFilters"><span>&#9776;</span> Menu</a>
         </div>
 
-        <div v-for="card in sort" :class="card.stats.class" v-show="!showFilters"><img :src="card.stats.image"></div>
+        <div v-for="card in sort" :class="card.stats.class" v-show="!showFilters"><img :src="card.stats.image" :alt="card.name"></div>
       </div>
     </div>
   </script>
