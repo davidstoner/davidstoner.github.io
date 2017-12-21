@@ -1893,6 +1893,34 @@ Vue.component('cards', {
   },
   mounted: function() {
     document.getElementById('search').focus();
+
+    // Lazy load images
+    // http://deanhume.com/home/blogpost/lazy-loading-images-using-intersection-observer/10163
+    const images = document.querySelectorAll('[data-src]');
+    const config = {
+      rootMargin: '100% 0px',
+      threshold: 0.01
+    };
+
+    let observer = new IntersectionObserver(onIntersection, config);
+    images.forEach(image => {
+      observer.observe(image);
+    });
+
+    function onIntersection(entries) {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio > 0) {
+          observer.unobserve(entry.target);
+          loadImage(entry.target);
+        }
+      });
+    }
+
+    function loadImage(image) {
+      console.log('hey')
+      image.src = image.dataset.src;
+      image.removeAttribute('data-src');
+    }
   }
 });
 

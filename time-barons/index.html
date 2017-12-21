@@ -28,16 +28,17 @@
     .cards {overflow:hidden;}
     .cards div {float:left;max-width:255px;padding:10px;}
     .cards div.hide {display:none;}
+    .cards div.show {width:255px;height:348px;}
     .cards div img {display:block;max-width:100%;}
-    .cards div.search {float:none;padding:10px;max-width:none;}
-    .cards div.count {float:right;padding:0;color:#666;border-bottom:1px solid #333;font:300 15px/60px Georgia, serif;text-align:right;}
+    .cards div.search {float:none;padding:10px;max-width:none;min-height:0;}
+    .cards div.count {float:right;padding:0;min-height:0;color:#666;border-bottom:1px solid #333;font:300 15px/60px Georgia, serif;text-align:right;}
     .search label {display:block;overflow:hidden;}
     .search input {padding:0;width:100%;background:transparent;border:none;border-bottom:1px solid #333;color:#ddd;font:300 25px/60px Georgia, serif;outline:none;}
     .cards .logo,
     .menu {display:none;}
 
     @media all and (max-width:450px) {
-      body {overflow-y:auto;}
+      body {min-width:240px;overflow-y:auto;}
       .logo {margin:30px 0;max-width:100%;}
       .cards .logo {display:block;margin:0 0 0 10px;max-width:calc(100% - 20px);}
       .filters {display:none;float:none;position:absolute;top:0;right:0;bottom:121px;left:0;padding:0 40px 30px;overflow:auto;background:#010101;}
@@ -45,6 +46,7 @@
       .cards {padding-bottom:121px;}
       .cards div.search {position:fixed;right:0;bottom:0;left:0;padding:10px 40px;background:hsla(0, 0%, 0%, .98);}
       .cards div {padding:0;max-width:none;}
+      .cards div.show {width:auto;height:auto;min-width:100%;min-height:327px;}
       .menu {display:block;padding:10px 0;color:#ffe345;font:500 10px/20px Roboto, sans-serif;letter-spacing:1px;text-transform:uppercase;}
       .menu span {font-size:14px;margin-right:5px;vertical-align:middle;}
     }
@@ -59,7 +61,7 @@
   <script type="x-template" id="cards">
     <div class="container">
       <ul class="filters" :class="{ show: showFilters }">
-        <li><img class="logo" alt="Time Barons" src="images/logo.png"></li>
+        <li><img class="logo" alt="Time Barons" data-src="images/logo.png"></li>
         <li class="filter-name">SET</li>
         <li><label><input type="checkbox" v-model="filters.set.core">Core</label></li>
         <li><label><input type="checkbox" v-model="filters.set.expansion">Expansion</label></li>
@@ -84,14 +86,14 @@
       </ul>
 
       <div class="cards">
-        <img class="logo" alt="Time Barons" src="images/logo.png">
+        <img class="logo" alt="Time Barons" data-src="images/logo.png">
         <div class="search">
           <div class="count">{{ count }} / {{ cards.length }}</div>
           <label><input type="text" placeholder="Search cards..." id="search" v-model="filters.name"></label>
           <a class="menu" @click="toggleFilters"><span>&#9776;</span> Menu</a>
         </div>
 
-        <div v-for="card in sort" :class="card.stats.class" v-show="!showFilters"><img :src="card.stats.image" :alt="card.name"></div>
+        <div v-for="card in sort" :class="card.stats.class" v-show="!showFilters"><img :data-src="card.stats.image" :alt="card.name"></div>
       </div>
     </div>
   </script>
