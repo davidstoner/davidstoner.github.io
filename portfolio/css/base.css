@@ -1,0 +1,84 @@
+html {
+  font-size: 20px;
+}
+
+body {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-size: 1rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  margin: 0 0 1rem;
+  font: 700 1.8rem/1 "Raleway", sans-serif
+}
+
+h1 span {
+  color: #6fa0e8;
+  font: 700 1.4rem/1 "Raleway", sans-serif;
+}
+
+h2 {
+  font: 700 1.1rem/1 "Raleway", sans-serif;
+}
+
+p {
+  color: #666;
+  font: .75rem/1.5 "Roboto", sans-serif;
+}
+
+a {
+  color: #2659ca;
+  font: .75rem/1.5 "Roboto", sans-serif;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 2.5rem;
+  max-width: 75rem;
+}
+
+header {
+  padding: 0 0 2.5rem;
+  border-bottom: 3px solid #000;
+}
+
+.project {
+  overflow: hidden;
+  padding: 2.5rem 0 5rem;
+  border-top: 3px solid #000;
+}
+
+.description {
+  float: left;
+  width: 25%;
+}
+
+.screenshots {
+  float: left;
+  padding: 0 0 0 5%;
+  width: 70%;
+}
+
+.screenshots img {
+  display: block;
+  margin: 0 0 15px;
+  max-width: 100%;
+}
+
+@media (max-width: 1000px) {
+  .description, .screenshots {
+    float: none;
+    padding: 0;
+    width: 100%;
+  }
+
+  .description {
+    max-width: 20rem;
+  }
+
+  .screenshots {
+    padding: 2.5rem 0 0;
+  }
+}
