@@ -7,7 +7,121 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>I am not original.</title>
+  <meta name="description" content="I am David Stoner.">
+
+  <!-- CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=block" rel="stylesheet">
+  <style>
+    :root {
+      --initial-opacity: 0;
+      --transition-duration: 300ms;
+      --display-duration: 0ms;
+      --delay: 3s;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    body {
+      margin: 0;
+      background: #c4d977;
+      color: #123e59;
+      animation: 5s ease-in-out 18s 1 forwards fadeToDark;
+    }
+
+    main {
+      padding: 10vh 10vw;
+      display: grid;
+      grid: auto / auto;
+      justify-items: start;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      grid-column: 1 / 1;
+      grid-row: 1 / 1;
+      font: clamp(2rem, calc(6vw + 1rem), 14rem)/1 'DM Serif Display', sans-serif;
+      opacity: var(--initial-opacity);
+      animation:
+        var(--transition-duration) ease-in-out var(--delay)                                 1 forwards fadeIn,
+        var(--transition-duration) ease-in-out calc(var(--delay) + var(--display-duration)) 1 forwards fadeOut,
+        var(--transition-duration) ease-in-out calc(var(--delay) + var(--display-duration)) 1 forwards slide;
+    }
+
+    h1:last-child {
+      animation: var(--transition-duration) ease-in-out var(--delay) 1 forwards fadeIn;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: var(--initial-opacity);
+      }
+
+      100% {
+       opacity: 1; 
+      }
+    }
+
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+       opacity: 0; 
+      }
+    }
+
+    @keyframes slide {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(0, -5rem, 0);
+      }
+    }
+
+    @keyframes fadeToDark {
+      0% {
+        background: #c4d977;
+        color: #123e59;
+      }
+
+      100% {
+        background: #123e59;
+        color: #a9b9d9;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <main>
+    <h1 style="--display-duration: 2500ms; --delay: 00s; --initial-opacity: 1;">Hello.</h1>
+    <h1 style="--display-duration: 2500ms; --delay: 03s;">I am not original.</h1>
+    <h1 style="--display-duration: 2500ms; --delay: 06s;">I am David Stoner.</h1>
+    <h1 style="--display-duration: 2500ms; --delay: 09s;">You can hire me.</h1>
+    <h1 style="--display-duration: 2500ms; --delay: 12s;">Oh, I make websites. I didn't mention that.</h1>
+    <h1 style="--display-duration: 500ms;  --delay: 15s;">Okay&hellip;</h1>
+    <h1 style="--display-duration: 500ms;  --delay: 16s;">Well&hellip;</h1>
+    <h1 style="--display-duration: 500ms;  --delay: 17s;">Uh&hellip;</h1>
+    <h1 style="--display-duration: 6000ms; --delay: 18s;">Goodbye.</h1>
+    <h1 style="--display-duration: 3000ms; --delay: 26s;">.</h1>
+    <h1 style="--display-duration: 2000ms; --delay: 27s;">..</h1>
+    <h1 style="--display-duration: 1000ms; --delay: 28s;">...</h1>
+    <h1 style="--display-duration: 2500ms; --delay: 30s;">You're still here?</h1>
+    <h1 style="--display-duration: 2500ms; --delay: 33s;">I have nothing else.</h1>
+    <h1 style="--display-duration: 2500ms; --delay: 36s;">You can stay if you want.</h1>
+    <h1 style="--display-duration: 2500ms; --delay: 39s;">But I'm gonna go.</h1>
+    <h1 style="--display-duration: 2500ms; --delay: 42s;">Have a good one.</h1>
+  </main>
 </body>
 </html>
