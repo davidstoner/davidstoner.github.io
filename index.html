@@ -10,12 +10,8 @@
   <meta name="description" content="I am David Stoner.">
 
   <!-- CSS -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=block" rel="stylesheet">
   <style>
     :root {
-      --initial-opacity: 0;
       --transition-duration: 300ms;
       --display-duration: 0ms;
       --delay: 3s;
@@ -36,7 +32,7 @@
     }
 
     main {
-      padding: 10vh 10vw;
+      padding: 8vh 8vw;
       display: grid;
       grid: auto / auto;
       justify-items: start;
@@ -48,34 +44,24 @@
       grid-column: 1 / 1;
       grid-row: 1 / 1;
       font: clamp(2rem, calc(6vw + 1rem), 14rem)/1 'DM Serif Display', sans-serif;
-      opacity: var(--initial-opacity);
+      opacity: 0;
       animation:
-        var(--transition-duration) ease-in-out var(--delay)                                 1 forwards fadeIn,
-        var(--transition-duration) ease-in-out calc(var(--delay) + var(--display-duration)) 1 forwards fadeOut,
+        var(--transition-duration) ease-in-out var(--delay)                                 1 forwards fade,
+        var(--transition-duration) ease-in-out calc(var(--delay) + var(--display-duration)) 1 forwards reverse fade,
         var(--transition-duration) ease-in-out calc(var(--delay) + var(--display-duration)) 1 forwards slide;
     }
 
     h1:last-child {
-      animation: var(--transition-duration) ease-in-out var(--delay) 1 forwards fadeIn;
+      animation: var(--transition-duration) ease-in-out var(--delay) 1 forwards fade;
     }
 
-    @keyframes fadeIn {
+    @keyframes fade {
       0% {
-        opacity: var(--initial-opacity);
+        opacity: 0;
       }
 
       100% {
        opacity: 1; 
-      }
-    }
-
-    @keyframes fadeOut {
-      0% {
-        opacity: 1;
-      }
-
-      100% {
-       opacity: 0; 
       }
     }
 
@@ -101,11 +87,15 @@
       }
     }
   </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <main>
-    <h1 style="--display-duration: 2500ms; --delay: 00s; --initial-opacity: 1;">Hello.</h1>
+    <h1 style="--display-duration: 2000ms; --delay: 0.5s;">Hello.</h1>
     <h1 style="--display-duration: 2500ms; --delay: 03s;">I am not original.</h1>
     <h1 style="--display-duration: 2500ms; --delay: 06s;">I am David Stoner.</h1>
     <h1 style="--display-duration: 2500ms; --delay: 09s;">You can hire me.</h1>
@@ -118,9 +108,9 @@
     <h1 style="--display-duration: 2000ms; --delay: 27s;">..</h1>
     <h1 style="--display-duration: 1000ms; --delay: 28s;">...</h1>
     <h1 style="--display-duration: 2500ms; --delay: 30s;">You're still here?</h1>
-    <h1 style="--display-duration: 2500ms; --delay: 33s;">I have nothing else.</h1>
-    <h1 style="--display-duration: 2500ms; --delay: 36s;">You can stay if you want.</h1>
-    <h1 style="--display-duration: 2500ms; --delay: 39s;">But I'm gonna go.</h1>
+    <h1 style="--display-duration: 2500ms; --delay: 33s;">That was it.</h1>
+    <h1 style="--display-duration: 2500ms; --delay: 36s;">I guess you can stay if you want.</h1>
+    <h1 style="--display-duration: 2500ms; --delay: 39s;">But I'm gonna go&hellip;</h1>
     <h1 style="--display-duration: 2500ms; --delay: 42s;">Have a good one.</h1>
   </main>
 </body>
