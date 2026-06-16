@@ -57,6 +57,10 @@
   .custom-scroll::-webkit-scrollbar-thumb { background: #C8C5BB; border-radius: 3px; }
   .custom-scroll::-webkit-scrollbar-thumb:hover { background: #A09D94; }
 
+  /* Premium hide scrollbar utility for state scroll list */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
   /* --- Map Container Configuration --- */
   #map { 
     height: 100%; 
@@ -116,20 +120,21 @@
   .trip-card {
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  .trip-card:hover {
-    /* No vertical movement/transform on hover to preserve alignment */
-  }
 </style>
 </head>
 
 <body class="bg-paper text-ink font-sans antialiased">
-<div id="app" v-cloak class="min-h-screen flex flex-col">
+<div id="app" v-cloak class="min-h-screen flex flex-col relative pb-20 lg:pb-0">
 
   <!-- ============ MAIN CONTENT GRID ============ -->
   <div class="w-full flex flex-col lg:flex-row flex-grow items-stretch">
     
     <!-- LEFT COLUMN: TRIP TIMELINE, SEARCH, FILTER -->
-    <div class="w-full lg:w-[45%] flex flex-col justify-between p-6 sm:p-10 lg:p-12 border-r border-line bg-paper z-10">
+    <div 
+      :class="[
+        'w-full lg:w-[45%] flex flex-col justify-between p-6 sm:p-10 lg:p-12 border-r border-line bg-paper z-10',
+        currentView === 'list' ? 'flex' : 'hidden lg:flex'
+      ]">
       
       <div>
         <!-- LOGO / HEADER -->
@@ -176,18 +181,18 @@
 
         </div>
 
-        <!-- REGIONAL TAB CONTROLS -->
-        <nav class="mb-6 border-b border-line" role="tablist">
-          <div class="flex flex-wrap gap-x-6 gap-y-2 text-xs uppercase tracking-wider font-bold">
+        <!-- REGIONAL TAB CONTROLS (Single row horizontal scrollable on mobile) -->
+        <nav class="mb-6 border-b border-line overflow-x-auto no-scrollbar" role="tablist">
+          <div class="flex flex-nowrap gap-x-6 pb-3 text-xs uppercase tracking-wider font-bold">
             <button 
               v-for="r in regionTabs" :key="r.key"
               @click="setRegion(r.key)"
               :class="[
-                'relative pb-3 transition-colors duration-200',
+                'relative pb-1 transition-colors duration-200 flex-shrink-0',
                 activeRegion === r.key ? 'text-brand' : 'text-inkSoft hover:text-ink'
               ]">
               {{ r.label }} <span class="text-[11px] font-mono text-inkSoft/50 font-normal">({{ r.count }})</span>
-              <span v-if="activeRegion === r.key" class="absolute bottom-0 left-0 w-full h-[2px] bg-brand rounded-full"></span>
+              <span v-if="activeRegion === r.key" class="absolute bottom-[-13px] left-0 w-full h-[2px] bg-brand rounded-full"></span>
             </button>
           </div>
         </nav>
@@ -270,10 +275,49 @@
     </div>
 
     <!-- RIGHT COLUMN: INTERACTIVE MAP CANVAS -->
-    <div class="w-full lg:w-[55%] h-[45vh] lg:h-screen lg:sticky lg:top-0 z-0">
+    <div 
+      :class="[
+        'w-full lg:w-[55%] h-[100vh] lg:h-screen lg:sticky lg:top-0 z-0',
+        currentView === 'map' ? 'block' : 'hidden lg:block'
+      ]">
       <div id="map" role="region" aria-label="Interactive Navigation Map"></div>
     </div>
 
+  </div>
+
+  <!-- MOBILE BOTTOM FLOATING NAVIGATION TOGGLE -->
+  <div class="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-white/95 backdrop-blur-md px-2 py-1.5 rounded-full border border-line shadow-solid-lg flex items-center gap-1.5">
+    <button 
+      @click="switchMobileView('list')"
+      :class="[
+        'flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200',
+        currentView === 'list' ? 'bg-brand text-white shadow-solid-md' : 'text-inkSoft hover:text-ink'
+      ]">
+      <!-- List Icon SVG -->
+      <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"/>
+        <line x1="40" y1="128" x2="216" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+        <line x1="40" y1="64" x2="216" y2="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+        <line x1="40" y1="192" x2="216" y2="192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+      </svg>
+      <span>List</span>
+    </button>
+    
+    <button 
+      @click="switchMobileView('map')"
+      :class="[
+        'flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200',
+        currentView === 'map' ? 'bg-brand text-white shadow-solid-md' : 'text-inkSoft hover:text-ink'
+      ]">
+      <!-- Map Icon SVG -->
+      <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"/>
+        <line x1="96" y1="184" x2="96" y2="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+        <line x1="160" y1="72" x2="160" y2="216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+        <polygon points="96 184 32 200 32 56 96 40 160 72 224 56 224 200 160 216 96 184" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+      </svg>
+      <span>Map</span>
+    </button>
   </div>
 
 </div>
@@ -350,7 +394,7 @@ const TRIPS = [
     lng: -89.3109, 
     start: '2021-07-10', 
     end: '2021-07-17', 
-    people: [...CREW, 'Jake', 'Jo', 'Calvin', 'Amy', 'Henry', 'Feta'], 
+    people: [...CREW, 'Jake', 'Jo', 'Dan', 'Calvin', 'Amy', 'Henry', 'Feta'], 
     address: '3090 County Hwy Q, Nelsonville, WI 54458',
     blurb: 'Stayed at a converted dairy barn. We played D&D. We had fresh eggs from the chickens. Visited Stevens Point including Call It New/Call It Antique 3 floor antique store. Wanted Henry to start crawling. Discovered lakes in Wisonsin are much colder than those further south.' 
   },
@@ -381,19 +425,6 @@ const TRIPS = [
     blurb: 'Bunkbed with a slide. Egg chair. Everyone except Dan went to Metropolis, National Quilt Museum, and Apple Valley Hillbilly Garden and Toyland. Anything below 5 stars is a negative review.' 
   },
   { 
-    id: 6, 
-    title: 'Lake Sara', 
-    location: 'Effingham', 
-    stateCode: 'IL', 
-    lat: 39.1351, 
-    lng: -88.6483, 
-    start: '2024-06-08', 
-    end: '2024-06-13', 
-    people: [...CREW, 'Feta', 'Henry'], 
-    address: '8274 Summit Rd, Effingham, IL 62401',
-    blurb: 'A-frame by a dirty lake. Everyone went to City Museum in St. Louis.' 
-  },
-  {
     id: 6, 
     title: 'Lake Sara', 
     location: 'Effingham', 
@@ -439,6 +470,9 @@ createApp({
     const markers = {};
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    // Mobile specific view state: 'list' or 'map'
+    const currentView = ref('list');
+
     // --- SEARCH STATE ---
     const searchQuery = ref('');
 
@@ -456,7 +490,6 @@ createApp({
       ];
     });
 
-    // --- STREAMING_CHUNK: Defining the core logic and calculated search/filter results... -->
     const filteredTrips = computed(() => {
       let list = trips;
       
@@ -582,6 +615,18 @@ createApp({
       }
     }
 
+    // Handles switching between Views on Mobile
+    function switchMobileView(view) {
+      currentView.value = view;
+      if (view === 'map') {
+        nextTick(() => {
+          if (map) {
+            map.invalidateSize();
+          }
+        });
+      }
+    }
+
     function selectTrip(id, { fromMap = false } = {}) {
       const prev = activeTripId.value;
       activeTripId.value = id;
@@ -589,17 +634,29 @@ createApp({
       refreshMarkerIcon(id);
 
       const t = trips.find(x => x.id === id);
-      const m = markers[id];
-      if (m) {
-        map.flyTo([t.lat, t.lng], 14, { 
-          animate: !reduce, 
-          duration: 0.45, 
-          easeLinearity: 0.25 
-        });
-        m.openPopup();
+
+      // On mobile, if user clicks a listing, we smoothly open and show it on the map view
+      if (!fromMap && t.lat && t.lng) {
+        switchMobileView('map');
       }
 
+      nextTick(() => {
+        const m = markers[id];
+        if (m && map) {
+          map.flyTo([t.lat, t.lng], 14, { 
+            animate: !reduce, 
+            duration: 0.45, 
+            easeLinearity: 0.25 
+          });
+          m.openPopup();
+        }
+      });
+
       if (fromMap) {
+        // If coming from a map click, we ensure list view is active on mobile so the card is scroll-highlighted
+        if (window.innerWidth < 1024) {
+          switchMobileView('list');
+        }
         nextTick(() => {
           const el = cardRefs[id];
           if (el) {
@@ -656,7 +713,7 @@ createApp({
       syncVisibleMarkers();
     });
 
-    // --- STREAMING_CHUNK: Setting up map interactions and Leaflet life cycle events... -->
+    // --- STREAMING_CHUNK: Configuring Leaflet interactive features and event listeners... -->
     onMounted(() => {
       map = L.map('map', { 
         zoomControl: true, 
@@ -687,11 +744,16 @@ createApp({
         const all = L.latLngBounds(tripsWithCoords.map(t => [t.lat, t.lng])).pad(0.15);
         map.fitBounds(all, { padding: [30, 30] });
       }
+
+      // Handle window resize dynamically
+      window.addEventListener('resize', () => {
+        if (map) map.invalidateSize();
+      });
     });
 
     return {
       trips, regionTabs, filteredTrips, activeRegion, activeTripId, cardRefs,
-      searchQuery,
+      searchQuery, currentView, switchMobileView,
       setRegion, selectTrip, hoverMarker, personName, isPartial, orderedPeople, 
       formatFullDatesWithoutYear, tripYear, tripDays, personColor, resetFilters
     };
